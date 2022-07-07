@@ -1,42 +1,53 @@
-import React from 'react';
+import React, {useState} from 'react';
+
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
-  VStack,
-  Code,
   Grid,
   theme,
+  Heading,
+  Flex,
+  Center,
+  Link,
+  IconButton,
+  ButtonGroup,
 } from '@chakra-ui/react';
+
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import {FaRegSun} from 'react-icons/fa';
+import Input from './Input';
+import TabSelect from './TabSelect';
 
 function App() {
+  
+  const [memos, setMemos] = useState(['trial', 'trial2', 'trial3']);
+  const [todos, setTodos] = useState(['test1', 'test2', 'test3']);
+
+
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
+      <Box textAlign="center" fontSize="xl" py='20px'>
+      <Flex minWidth='max-content' alignItems='center' justify={'space-around'} gap='2'>
+          <Heading size='md' py='20px'>
+            <Link a='#'>lyfMemo</Link>
+          </Heading>
+          <ButtonGroup>
+            <IconButton icon={FaRegSun} variant='ghost' color='current'/>
+            <ColorModeSwitcher justifySelf="stretch" />
+          </ButtonGroup>
+       
+      </Flex>
+      <Center>
+        <Grid minW={'50vw'}>
+          <Input memos={memos} setMemos={setMemos}/>
+          <br/>
+          <TabSelect memos={memos} setMemos={setMemos} todos={todos} setTodos={setTodos}/>
         </Grid>
+      </Center>
       </Box>
     </ChakraProvider>
   );
 }
 
 export default App;
+
