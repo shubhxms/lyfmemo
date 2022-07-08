@@ -4,33 +4,25 @@ import Memos from './Memos'
 import ToDos from './ToDos';
 
 function TabSelect(props) {
-  let {memos, setMemos, todos, setTodos} = props;
+  let {memos, setMemos, todos, setTodos, defIdx, setDefIdx} = props;
   return (
-    <Tabs defaultIndex={2} isFitted variant='enclosed'>
+    <Tabs defaultIndex={defIdx} isFitted variant='enclosed'>
 
       <TabList mb='1em'>
         <Tab>To-Do</Tab>
         <Tab>Memos</Tab>
-        <Tab>Inbox</Tab>
         <Tab>To-Read</Tab>
-        <Tab>Archive</Tab>
       </TabList>
 
       <TabPanels>
         <TabPanel>
-          <ToDos todos={todos} setTodos={setTodos}/>
+          <ToDos todos={todos} setTodos={setTodos} setDefIdx={setDefIdx}/>
         </TabPanel>
         <TabPanel>
           <Memos memos={memos} setMemos={setMemos}/>
         </TabPanel>
         <TabPanel>
-            <p>inbox!</p>
-        </TabPanel>
-        <TabPanel>
             <p>to read!</p>
-        </TabPanel>
-        <TabPanel>
-            <p>archive!</p>
         </TabPanel>
       </TabPanels>
 

@@ -14,9 +14,12 @@ import
  
  function Input(props) {
 
-    let {memos, setMemos} = props;
+    let {memos, setMemos, setDefIdx} = props;
     const [liveMemoText, setLiveMemoText] = useState('');
-    const handleChange = (e) => setLiveMemoText(e.target.value);
+    const handleChange = (e) => {
+      setDefIdx(1)
+      setLiveMemoText(e.target.value)
+    };
 
     
 
