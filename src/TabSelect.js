@@ -2,9 +2,10 @@ import React from 'react'
 import {Tabs, Tab, TabList, TabPanels, TabPanel} from '@chakra-ui/react'
 import Memos from './Memos'
 import ToDos from './ToDos';
+import ToReads from './ToReads';
 
 function TabSelect(props) {
-  let {memos, setMemos, todos, setTodos, defIdx, setDefIdx} = props;
+  let {memos, setMemos, todos, setTodos, toReads, setToReads, defIdx, setDefIdx} = props;
   return (
     <Tabs defaultIndex={defIdx} isFitted variant='enclosed'>
 
@@ -22,7 +23,7 @@ function TabSelect(props) {
           <Memos memos={memos} setMemos={setMemos}/>
         </TabPanel>
         <TabPanel>
-            <p>to read!</p>
+            <ToReads toReads={toReads} setToReads={setToReads} />
         </TabPanel>
       </TabPanels>
 

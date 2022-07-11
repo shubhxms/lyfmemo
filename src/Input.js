@@ -14,7 +14,7 @@ import
  
  function Input(props) {
 
-    let {memos, setMemos, setDefIdx} = props;
+    let {memos, setMemos, setDefIdx, handleNewMemo} = props;
     const [liveMemoText, setLiveMemoText] = useState('');
     const handleChange = (e) => {
       setDefIdx(1)
@@ -40,7 +40,7 @@ import
               <Button
               colorScheme='blue' size='sm'
               onClick={() => (
-                liveMemoText !== '' && (setMemos([liveMemoText, ...memos]),
+                liveMemoText !== '' && (handleNewMemo(liveMemoText),
                 setLiveMemoText('')
                   ))}
               > Save </Button>
