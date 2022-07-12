@@ -5,7 +5,7 @@ import ToDos from './ToDos';
 import ToReads from './ToReads';
 
 function TabSelect(props) {
-  let {memos, setMemos, todos, setTodos, toReads, setToReads, defIdx, setDefIdx} = props;
+  let {memosMain, setMemosMain, todos, setTodos, deleteTodo, checkTodo, toReads, setToReads, defIdx, setDefIdx} = props;
   return (
     <Tabs defaultIndex={defIdx} isFitted variant='enclosed'>
 
@@ -17,10 +17,10 @@ function TabSelect(props) {
 
       <TabPanels>
         <TabPanel>
-          <ToDos todos={todos} setTodos={setTodos} setDefIdx={setDefIdx}/>
+          <ToDos todos={todos} setTodos={setTodos} deleteTodo={deleteTodo} checkTodo={checkTodo}/>
         </TabPanel>
         <TabPanel>
-          <Memos memos={memos} setMemos={setMemos}/>
+          <Memos memosMain={memosMain} setMemosMain={setMemosMain}/>
         </TabPanel>
         <TabPanel>
             <ToReads toReads={toReads} setToReads={setToReads} />

@@ -3,7 +3,6 @@ import {Tr, Td, Text, Link} from '@chakra-ui/react'
 import nlp from 'compromise';
 
 function ToRead(props) {
-
   let {toRead} = props;
   let url = nlp(toRead).match('#Url').text()
   console.log(url);

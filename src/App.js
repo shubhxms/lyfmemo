@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {v4 as uuidv4} from 'uuid'
 import {
   ChakraProvider,
@@ -19,8 +19,7 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  Portal,
-  Button
+  Portal
 } from '@chakra-ui/react';
 
 import { ColorModeSwitcher } from './ColorModeSwitcher';
@@ -28,20 +27,29 @@ import {FaInbox, FaArchive, FaQuestion} from 'react-icons/fa';
 import Input from './Input';
 import TabSelect from './TabSelect';
 import compromiseFunc from './compromise';
+import {getLocalStorage, setLocalStorage} from './syncLocalStorage'
 
 function App() {
   
-  const [memos, setMemos] = useState(['trial', 'trial2', 'trial3']);
-  const [todos, setTodos] = useState([
-							  {value:'test1', checked:false, uuid:0},
-							  {value:'test2', checked:false, uuid:1}, 
-							  {value:'test3', checked:false, uuid:2}
-							]);
-  const [memosMain, setMemosMain] = useState(['trial', 'trial2', 'trial3']);
+  const [memos, setMemos] = useState(['abcd']);
+  const [todos, setTodos] = useState([]);
+  const [memosMain, setMemosMain] = useState([]);
   const [toReads, setToReads] = useState([]);
   const [archives, setArchives] = useState([]);
   const [inbox, setInbox] = useState([]);
   const [defIdx, setDefIdx] = useState(1);
+
+//   let allMemos = [];
+// {value:'test1', checked:false, uuid:0},
+// {value:'test2', checked:false, uuid:1}, 
+// {value:'test3', checked:false, uuid:2}
+
+  useEffect(() => {
+	let allMemos = getLocalStorage();
+	setTodos(allMemos[0])
+	setMemosMain(allMemos[1])
+	setToReads(allMemos[2])
+  }, [todos, memosMain, toReads])
 
 
 
@@ -51,18 +59,50 @@ function App() {
 	  // switch case -> add memo to a list based on type
 	switch (type) {
 		case 0:
+			setLocalStorage(
+				[{value:memo, checked:false, uuid:uuidv4()}, ...todos],
+				memosMain, toReads);
 			setTodos([{value:memo, checked:false, uuid:uuidv4()}, ...todos])
 			break;
 		case 2:
+			setLocalStorage(todos, memosMain, [memo, ...toReads]);
 			setToReads([memo, ...toReads])
 			break;
 		default:
+			setLocalStorage(todos, [memo, ...memosMain], toReads);
 			setMemosMain([memo, ...memosMain])
 			break;
 	  }
   }
 
+  const deleteTodo = (uuid) => {
+	console.log(typeof(uuid))
+    const arr = [];
+    for (let todo in todos){
+      console.log("asd")
+      console.log(todo)
+      if (todos[todo].uuid !== uuid){
+        console.log("hererer")
+        arr.push(todos[todo]) 
+      }  
+    }
+	setLocalStorage(arr, memosMain, toReads);
+    setTodos(arr);
+    console.log(todos);
+  }
 
+  let checkTodo = (uuid) => {
+    let arr = [...todos]
+    for (let todo of arr){
+      if (todo.uuid === uuid){
+        todo.checked = !todo.checked;
+      }
+    }
+    console.log(arr);
+	setLocalStorage(arr, memosMain, toReads);
+    setTodos(arr);
+    console.log(todos)
+  };
 
   return (
 	<ChakraProvider theme={theme}>
@@ -129,6 +169,8 @@ function App() {
 			
 			<ColorModeSwitcher justifySelf="stretch" />
 		  </ButtonGroup>
+		
+		
 	   
 	  </Flex>
 	  <Center>
@@ -140,8 +182,8 @@ function App() {
 		  />
 		  <br/>
 		  <TabSelect
-		  memos={memosMain} setMemos={setMemosMain}
-		  todos={todos} setTodos={setTodos}
+		  memosMain={memosMain} setMemosMain={setMemosMain}
+		  todos={todos} setTodos={setTodos} deleteTodo={deleteTodo} checkTodo={checkTodo}
 		  toReads={toReads} setToReads={setToReads}
 		  defIdx={defIdx} setDefIdx={setDefIdx}
 		  />

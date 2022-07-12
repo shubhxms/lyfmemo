@@ -12,7 +12,6 @@ function ToReads(props) {
     <div>
         <TableContainer>
             <Table variant='simple'>
-    {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
                 <Tbody>
                     {toReads.map(memo => (
                         <Memo key={toReads.indexOf(memo)} memo={memo}/>
