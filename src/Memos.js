@@ -4,6 +4,7 @@ import Memo from './Memo';
 
 function Memos(props) {
     let {memosMain} = props;
+    // let recentMemos = memosMain.slice(0, 30);
   return (
     <>
       <TableContainer>

@@ -19,7 +19,8 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  Portal
+  Portal,
+  Tooltip
 } from '@chakra-ui/react';
 
 import { ColorModeSwitcher } from './ColorModeSwitcher';
@@ -28,6 +29,7 @@ import Input from './Input';
 import TabSelect from './TabSelect';
 import compromiseFunc from './compromise';
 import {getLocalStorage, setLocalStorage} from './syncLocalStorage'
+import Memos from './Memos';
 
 function App() {
   
@@ -49,6 +51,7 @@ function App() {
 	setTodos(allMemos[0])
 	setMemosMain(allMemos[1])
 	setToReads(allMemos[2])
+	setArchives(memosMain.slice(3))
   }, [todos, memosMain, toReads])
 
 
@@ -113,33 +116,41 @@ function App() {
 			<Link href='#'>lyfMemo</Link>
 		  </Heading>
 		<Popover>
-			  <PopoverTrigger>
-				<IconButton icon={<FaQuestion/>} variant='ghost' color='current'/>
-			  </PopoverTrigger>
-			  <Portal>
-				<PopoverContent>
-				  <PopoverArrow />
-					<PopoverHeader>About</PopoverHeader>
-					<PopoverCloseButton />
-					<PopoverBody>
-						lyfmemo-v0.1
-						<br/>
-						HOW-TO & ABOUT COMING SOON!
-					</PopoverBody>
-					<PopoverFooter>
-						Made with 〈〉& ❤ by <Link isExternal href='https://twitter.com/shubhxms'>@shubhxms</Link>
-					</PopoverFooter>
-				</PopoverContent>
-			  </Portal>   
-			  </Popover>
+			<Tooltip label='About' for='about-button'>
+				<Box display='inline-block'>
+					<PopoverTrigger>
+						<IconButton id='about-button' icon={<FaQuestion/>} variant='ghost' color='current'/>	
+					</PopoverTrigger>
+				</Box> 
+			</Tooltip>
+			<Portal>
+			<PopoverContent>
+				<PopoverArrow />
+				<PopoverHeader>About</PopoverHeader>
+				<PopoverCloseButton />
+				<PopoverBody>
+					lyfmemo-v0.1
+					<br/>
+					HOW-TO & ABOUT COMING SOON!
+				</PopoverBody>
+				<PopoverFooter>
+					Made with 〈〉& ❤ by <Link isExternal href='https://twitter.com/shubhxms'>@shubhxms</Link>
+				</PopoverFooter>
+			</PopoverContent>
+			</Portal>  
+		</Popover>
 		</ButtonGroup>
 		  <ButtonGroup>
 			<Popover>
-			  <PopoverTrigger>
-				<IconButton 
-				  icon={<FaInbox/>} variant='ghost' color='current'
-				/>
-			  </PopoverTrigger>
+				<Tooltip label='Inbox'>
+					<Box display='inline-block'>
+						<PopoverTrigger>
+							<IconButton 
+							icon={<FaInbox/>} variant='ghost' color='current'
+							/>
+						</PopoverTrigger>
+					</Box>
+				</Tooltip>	  
 			  <Portal>
 				<PopoverContent>
 				  <PopoverArrow />
@@ -150,24 +161,29 @@ function App() {
 				</PopoverContent>
 			  </Portal>   
 			  </Popover>
+
 			  <Popover>
-			  <PopoverTrigger>
-				<IconButton icon={<FaArchive/>} variant='ghost' color='current'/>
-			  </PopoverTrigger>
+				<Tooltip label='Archive'>
+					<Box display='inline-block'>
+						<PopoverTrigger>
+							<IconButton icon={<FaArchive/>} variant='ghost' color='current'/>
+						</PopoverTrigger>
+					</Box>
+				</Tooltip>  
 			  <Portal>
 				<PopoverContent>
 				  <PopoverArrow />
 					<PopoverHeader>Archive</PopoverHeader>
 					<PopoverCloseButton />
 					<PopoverBody>
-					Coming Soon
+						<Memos memosMain={memosMain.slice(20)}/>
 					</PopoverBody>
-					<PopoverFooter>🤫</PopoverFooter>
+					<PopoverFooter>Find Old Memos here</PopoverFooter>
 				</PopoverContent>
 			  </Portal>   
 			  </Popover>
-			
 			<ColorModeSwitcher justifySelf="stretch" />
+
 		  </ButtonGroup>
 		
 		
@@ -176,16 +192,16 @@ function App() {
 	  <Center>
 		<Grid minW={'50vw'}>
 		  <Input
-		  memos={memosMain} setMemos={setMemosMain} 
-		  handleNewMemo={handleNewMemo}
-		  setDefIdx={setDefIdx}
+			memos={memosMain} setMemos={setMemosMain} 
+			handleNewMemo={handleNewMemo}
+			setDefIdx={setDefIdx}
 		  />
 		  <br/>
 		  <TabSelect
-		  memosMain={memosMain} setMemosMain={setMemosMain}
-		  todos={todos} setTodos={setTodos} deleteTodo={deleteTodo} checkTodo={checkTodo}
-		  toReads={toReads} setToReads={setToReads}
-		  defIdx={defIdx} setDefIdx={setDefIdx}
+			memosMain={memosMain.slice(0, 20)} setMemosMain={setMemosMain}
+			todos={todos} setTodos={setTodos} deleteTodo={deleteTodo} checkTodo={checkTodo}
+			toReads={toReads} setToReads={setToReads}
+			defIdx={defIdx} setDefIdx={setDefIdx}
 		  />
 		</Grid>
 	  </Center>
