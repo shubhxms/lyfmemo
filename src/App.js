@@ -20,7 +20,8 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Portal,
-  Tooltip
+  Tooltip,
+  textDecoration
 } from '@chakra-ui/react';
 
 import { ColorModeSwitcher } from './ColorModeSwitcher';
@@ -107,6 +108,7 @@ function App() {
     console.log(todos)
   };
 
+
   return (
 	<ChakraProvider theme={theme}>
 	  <Box textAlign="center" fontSize="xl" py='20px'>
@@ -132,9 +134,12 @@ function App() {
 					lyfmemo-v0.1
 					<br/>
 					HOW-TO & ABOUT COMING SOON!
+					checkout repo at <span style={{'textDecoration':'underline'}}><Link isExternal href='https://github.com/shubhxms/lyfmemo'>github</Link></span>
 				</PopoverBody>
 				<PopoverFooter>
-					Made with 〈〉& ❤ by <Link isExternal href='https://twitter.com/shubhxms'>@shubhxms</Link>
+					Made with 〈〉& ❤ by
+					<span style={{'textDecoration':'underline'}}>
+						<Link isExternal href='https://twitter.com/shubhxms'>@shubhxms</Link></span>
 				</PopoverFooter>
 			</PopoverContent>
 			</Portal>  
@@ -156,7 +161,11 @@ function App() {
 				  <PopoverArrow />
 					<PopoverHeader>Inbox</PopoverHeader>
 					<PopoverCloseButton />
-					Coming Soon
+					New Features Coming Soon
+					<br/>
+					- Edit and Delete Memos
+					<br/>
+					- Search through Memos
 					<PopoverFooter>🤫</PopoverFooter>
 				</PopoverContent>
 			  </Portal>   
