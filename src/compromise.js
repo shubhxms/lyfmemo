@@ -20,10 +20,10 @@ classifies memos into tasks, to read, and other
 
 const compromiseFunc = (memo) => {
     if(
-        nlp(memo).has('#Url')){
+        nlp(memo).has('~(#Url|read)~')){
             return 2
     }else if(
-        nlp(memo).has('~(todo|complete|do)~')){
+        nlp(memo).has('~(todo|complete|do|finish)~')){
             return 0
     }else if(nlp(memo).has('~(get * done)~')){
         return 0
